@@ -41,7 +41,7 @@ class User extends \TCG\Voyager\Models\User
         return $this->$this->hasMany(Post::class);
     }
 
-    public function comment(){
+    public function comments(){
         return $this->$this->hasMany(Comment::class);
     }
 }

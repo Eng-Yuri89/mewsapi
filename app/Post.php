@@ -10,4 +10,16 @@ class Post extends Model
         'title','content','featured_image','votes_up','vote_down','user_id'
     ];
 
+
+    public function author(){
+        return $this->belongsTo(User::class);
+    }
+
+    public  function comments(){
+        return$this->hasMany(Comment::class);
+    }
+
+    public  function category(){
+        return $this->belongsTo(Category::class);
+    }
 }
