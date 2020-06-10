@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatepostsTable extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,20 +16,13 @@ class CreatepostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->text('content');
-
             $table->dateTime('data_written');
-
-
-            $table->string('featured_image')->nullable();
-            $table->integer('votes_up')->nullable();
-            $table->integer('vote_down')->nullable();
-
-
-            // Relationships
+            $table->text('content');
+            $table->string('featured_image');
+            $table->integer('votes_up');
+            $table->integer('vote_down');
             $table->integer('user_id');
             $table->integer('category_id');
-
             $table->timestamps();
         });
     }
