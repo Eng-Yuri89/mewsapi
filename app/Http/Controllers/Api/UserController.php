@@ -11,6 +11,7 @@ use App\Http\Resources\UsersResource;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UserController
@@ -28,15 +29,25 @@ class UserController extends Controller
         return new UsersResource($users);
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return UserResource
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+          'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        $user = new User();
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->password = Hash::make($request->get('password'));
+        $user->save();
+
+        return new UserResource($user);
     }
 
 
@@ -52,16 +63,27 @@ class UserController extends Controller
         return new UserResource(User::find($id));
     }
 
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return UserResource
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        if ($request->has('name')){
+            $user->name = $request->get('name');
+
+        }
+
+        if ($request->has('avatat')){
+            $user->avatar = $request->get('avatar');
+
+        }
+
+        $user->save();
+        return new UserResource($user);
     }
 
     /**
@@ -98,6 +120,10 @@ class UserController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return TokenResource|string
+     */
     public function getToken(Request $request){
         $request->validate([
             'email' => 'required',
