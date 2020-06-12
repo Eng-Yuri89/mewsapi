@@ -38,10 +38,10 @@ class User extends \TCG\Voyager\Models\User
     ];
 
     public function posts(){
-        return $this->$this->hasMany(Post::class);
+        return $this->hasMany(Post::class);
     }
 
-    public function comment(){
-        return $this->$this->hasMany(Comment::class);
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 }
